@@ -20,6 +20,8 @@ type Combinable = string | number;
 type Numeric = number | boolean;
 type Universal = Combinable & Numeric;
 
+function add(a: string, b: string): string;
+function add(a: number, b: number): number;
 function add(a: Combinable, b: Combinable) {
   if (typeof a == 'string' || typeof b === 'string') {
     return a.toString() + b.toString();
@@ -27,6 +29,19 @@ function add(a: Combinable, b: Combinable) {
 
   return a + b;
 }
+
+const result = add('Max', 'Swatz');
+result.split('Hi');
+
+const fetchedUserData = {
+  id: 'u1',
+  name: 'Max',
+  job: { title: 'CEO', description: 'My own company' },
+};
+console.log(fetchedUserData?.job?.title);
+const userInput = '';
+const storedData = userInput ?? 'DEFAULT';
+console.log(storedData)
 
 type UnknownEmployee = Employee | Admin;
 function printEmployeeInformation(emp: UnknownEmployee) {
@@ -70,3 +85,51 @@ function useVehicle(vehicle: Vehicle) {
 
 useVehicle(v1);
 useVehicle(v2);
+
+interface Bird {
+  type: 'bird';
+  flyingSpeed: number;
+}
+
+interface Horse {
+  type: 'horse';
+  runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+  let speed;
+  switch (animal.type) {
+    case 'bird':
+      speed = animal.flyingSpeed;
+      break;
+    case 'horse':
+      speed = animal.runningSpeed;
+      break;
+  }
+  console.log(`Moving with speed ${speed}`);
+}
+
+moveAnimal({ type: 'bird', flyingSpeed: 25 });
+
+// const userInputElement = <HTMLInputElement>(
+//   document.getElementById('user-input')
+// );
+// const userInputElement = document.getElementById(
+//   'user-input'
+// ) as HTMLInputElement;
+const userInputElement = document.getElementById('user-input');
+if (userInputElement) {
+  (userInputElement as HTMLInputElement).value = 'Hi there!!';
+}
+
+interface ErrorContainer {
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: 'Error on email',
+  1: 'Hi',
+  username: 'Must start with capital letter',
+};
